@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: hotelapi
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/hoteldbv2
+    username: postgres
+    password: postgres
+  jpa:
+    show_sql: true
+    properties:
+      hibernate:
+        format_sql: true

@@ -1,0 +1,39 @@
+create table hotel(
+	id bigint generated always as identity primary key,
+	nome varchar(100) not null,
+	estado varchar(40) not null,
+	cidade varchar(40) not null,
+	telefone varchar(50),
+	andares integer,
+	data_cadastro timestamp,
+	data_atualizacao timestamp
+);
+
+
+create table quarto(
+	id bigint generated always as identity primary key,
+	tipo varchar(50) not null,
+	preco numeric(18, 2) not null,
+	capacidade integer not null,
+	disponivel integer not null,
+	tamanho_m² varchar(20),
+	id_hotel bigint references hotel(id) not null,
+	data_cadastro timestamp,
+	data_atualizacao timestamp
+)
+
+create table reserva(
+	id bigint generated always as identity primary key,
+	check_in date not null,
+	check_out date not null,
+	nome_hospede varchar(100),
+	email varchar(100) not null,
+	telefone varchar(80),
+	num_adultos integer not null,
+	num_criancas integer not null,
+	total integer not null,
+	cod_confirmacao varchar(150) not null,
+	id_quarto bigint references quarto(id) not null,
+	data_cadastro timestamp,
+    data_atualizacao timestamp
+)
