@@ -7,6 +7,8 @@ import com.hotelapi.hotelapi.repository.QuartoRepository;
 import com.hotelapi.hotelapi.repository.specs.QuartoSpecs;
 import com.hotelapi.hotelapi.validation.QuartoValidator;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
@@ -30,7 +32,7 @@ public class QuartoService {
                 .orElseThrow(() -> new RegistroNaoEncontradoException("Não existe um registro para esse id!"));
     }
 
-    public List<Quarto> pesquisaFiltrada(String tipoQuarto, BigDecimal preco1, BigDecimal preco2, String nomeHotel) {
+    public Page<Quarto> pesquisaFiltrada(String tipoQuarto, BigDecimal preco1, BigDecimal preco2, String nomeHotel, Integer numPagina, Integer tamanhoPagina) {
         Specification<Quarto> specs = (root, query, cb) -> cb.conjunction();
 
         if(tipoQuarto != null) {
@@ -45,7 +47,8 @@ public class QuartoService {
             specs = specs.and(QuartoSpecs.equalNomeHotel(nomeHotel));
         }
 
-        return repository.findAll(specs);
+        PageRequest pageRequest = PageRequest.of(numPagina, tamanhoPagina);
+        return repository.findAll(specs, pageRequest);
     }
 
     public void atualizar(Long id, Quarto aux) {
@@ -53,9 +56,9 @@ public class QuartoService {
                 .orElseThrow(() -> new RegistroNaoEncontradoException("Não existe um registro para esse id!"));
 
         entidade.setTipoQuarto(aux.getTipoQuarto());
-        entidade.setPreco(aux.getPreco());
-        entidade.setCapacidade(aux.getCapacidade());
-        entidade.setDisponivel(aux.getDisponivel());
+        entidade.setPrecoDiaria(aux.getPrecoDiaria());
+        entidade.setCapacidadeMaxima(aux.getCapacidadeMaxima());
+        entidade.setVagasDisponiveis(aux.getVagasDisponiveis());
         entidade.setTamanho(aux.getTamanho());
         entidade.setHotel(aux.getHotel());
 

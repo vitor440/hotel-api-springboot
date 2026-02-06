@@ -8,6 +8,8 @@ import com.hotelapi.hotelapi.validation.HotelValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -29,7 +31,7 @@ public class HotelService {
                 .orElseThrow(() -> new RegistroNaoEncontradoException("Não existe um registro para esse id!"));
     }
 
-    public List<Hotel> pesquisaFiltrada(String nome, String estado) {
+    public Page<Hotel> pesquisaFiltrada(String nome, String estado, Integer numPagina, Integer tamanhoPagina) {
         Hotel entidade = new Hotel();
         entidade.setNome(nome);
         entidade.setEstado(estado);
@@ -39,7 +41,9 @@ public class HotelService {
                 .withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING);
 
         Example<Hotel> example = Example.of(entidade, matcher);
-        return repository.findAll(example);
+        PageRequest pageRequest = PageRequest.of(numPagina, tamanhoPagina);
+
+        return repository.findAll(example, pageRequest);
     }
 
     public void atualizar(Long id, HotelDTO dto) {

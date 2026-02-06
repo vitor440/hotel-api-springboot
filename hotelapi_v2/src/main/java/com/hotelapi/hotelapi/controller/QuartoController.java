@@ -7,13 +7,13 @@ import com.hotelapi.hotelapi.model.Quarto;
 import com.hotelapi.hotelapi.service.QuartoService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.math.BigDecimal;
 import java.net.URI;
-import java.util.List;
 
 @RestController
 @RequestMapping("/quartos")
@@ -44,14 +44,16 @@ public class QuartoController {
     }
 
     @GetMapping
-    public ResponseEntity<List<RespostaQuartoDTO>> pesquisaFiltrada(
+    public ResponseEntity<Page<RespostaQuartoDTO>> pesquisaFiltrada(
             @RequestParam(value = "tipo-quarto", required = false) String tipoQuarto,
             @RequestParam(value = "p1", required = false) BigDecimal p1,
             @RequestParam(value = "p2", required = false) BigDecimal p2,
-            @RequestParam(value = "nome-hotel", required = false) String nomeHotel
+            @RequestParam(value = "nome-hotel", required = false) String nomeHotel,
+            @RequestParam(value = "num-pagina", defaultValue = "0") Integer numPagina,
+            @RequestParam(value = "tamanho-pagina", defaultValue = "3") Integer tamanhoPagina
             ) {
-        List<Quarto> resultado = service.pesquisaFiltrada(tipoQuarto, p1, p2, nomeHotel);
-        List<RespostaQuartoDTO> resultadoDTO = mapper.toDTOList(resultado);
+        Page<Quarto> resultado = service.pesquisaFiltrada(tipoQuarto, p1, p2, nomeHotel, numPagina, tamanhoPagina);
+        Page<RespostaQuartoDTO> resultadoDTO = resultado.map(mapper::toDTO);
 
         return ResponseEntity.ok(resultadoDTO);
     }

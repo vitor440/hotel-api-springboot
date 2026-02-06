@@ -11,12 +11,12 @@ public record CadastroQuartoDTO(Long id,
                                 @NotBlank(message = "Campo Obrigatório!")
                                 String tipoQuarto,
                                 @NotNull(message = "Campo Obrigatório!")
-                                BigDecimal preco,
+                                BigDecimal precoDiaria,
                                 @NotNull(message = "Campo Obrigatório!")
                                 @Max(value = 5, message = "Capacidade máxima maior que 5!")
-                                Integer capacidade,
+                                Integer capacidadeMaxima,
                                 @NotNull(message = "Campo Obrigatório!")
-                                Integer disponivel,
+                                Integer vagasDisponiveis,
                                 @NotBlank(message = "Campo Obrigatório!")
                                 String tamanho,
                                 @NotNull(message = "Campo Obrigatório!")

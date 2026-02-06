@@ -25,11 +25,7 @@ public class ReservaValidator {
     private boolean datasConflitantes(Reserva reserva) {
         Specification<Reserva> specs = ReservaSpecs
                 .datasConflitantes(reserva.getCheckIn(), reserva.getCheckOut())
-                .and(((root, query, cb) -> cb
-                        .equal(root.get("quarto"), reserva.getQuarto())));
-
-//        specs = specs.and((root, query, cb) -> cb
-//                .equal(root.get("quarto"), reserva.getQuarto()));
+                .and(ReservaSpecs.equalQuarto(reserva.getQuarto()));
 
         List<Reserva> lista = reservaRepository.findAll(specs);
 

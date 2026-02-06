@@ -35,14 +35,14 @@ public class Reserva {
     @Column(name = "telefone")
     private String telefone;
 
-    @Column(name = "num_adultos")
-    private Integer numAdultos;
+    @Column(name = "quantidade_adultos")
+    private Integer quantidadeAdultos;
 
-    @Column(name = "num_criancas")
-    private Integer numCriancas;
+    @Column(name = "quantidade_criancas")
+    private Integer quantidadeCriancas;
 
-    @Column(name = "total")
-    private Integer total;
+    @Column(name = "total_hospedes")
+    private Integer totalHospedes;
 
     @Column(name = "cod_confirmacao")
     private String codigoConfirmacao;

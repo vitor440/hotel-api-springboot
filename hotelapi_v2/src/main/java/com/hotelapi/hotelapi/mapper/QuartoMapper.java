@@ -19,9 +19,6 @@ public abstract class QuartoMapper {
 
     public abstract RespostaQuartoDTO toDTO(Quarto entidade);
 
-    // repository.findById(dto.idHotel()).orElse(null)
-    // @Mapping(target = "hotel", expression = "java(repository.findById(dto.idHotel()).orElse(null))")
-    // repository.findById(dto.idHotel()).orElseThrow(() -> new MethodArgumentNotValidException("Hotel inexistente!"))
     @Mapping(target = "hotel", expression = "java(repository.findById(dto.idHotel()).orElseThrow(() -> new RuntimeException(\"Hotel inexistente!\")))")
     public abstract Quarto toEntity(CadastroQuartoDTO dto);
 

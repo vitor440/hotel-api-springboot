@@ -16,7 +16,7 @@ public class QuartoSpecs {
     }
 
     public static Specification<Quarto> precoEntre(BigDecimal p1, BigDecimal p2) {
-        return (root, query, cb) -> cb.between(root.get("preco"), p1, p2);
+        return (root, query, cb) -> cb.between(root.get("precoDiaria"), p1, p2);
     }
 
     public static Specification<Quarto> equalNomeHotel(String nomeHotel) {

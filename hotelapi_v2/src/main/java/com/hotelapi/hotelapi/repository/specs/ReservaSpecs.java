@@ -1,5 +1,7 @@
 package com.hotelapi.hotelapi.repository.specs;
 
+import com.hotelapi.hotelapi.model.Hotel;
+import com.hotelapi.hotelapi.model.Quarto;
 import com.hotelapi.hotelapi.model.Reserva;
 import jakarta.persistence.criteria.Join;
 import jakarta.persistence.criteria.JoinType;
@@ -24,11 +26,6 @@ public class ReservaSpecs {
                 .like(root.get("telefone"), telefone);
     }
 
-    public static Specification<Reserva> likeCodigoConfirmacao(String codigoConfirmacao) {
-        return (root, query, cb) -> cb
-                .like(root.get("codigoConfirmacao"), codigoConfirmacao);
-    }
-
     public static Specification<Reserva> likeTipoQuarto(String tipoQuarto) {
         return (root, query, cb) -> {
             Join<Object, Object> quarto = root.join("quarto", JoinType.INNER);
@@ -36,13 +33,17 @@ public class ReservaSpecs {
         };
     }
 
-
     public static Specification<Reserva> datasConflitantes(LocalDate d1, LocalDate d2) {
         return (root, query, cb) -> cb
                 .and(cb.lessThanOrEqualTo(root.get("checkIn"), d2),
                 cb.greaterThanOrEqualTo(root.get("checkOut"), d1)
                 );
     }
+
+    public static Specification<Reserva> equalQuarto(Quarto quarto) {
+        return (root, query, cb) -> cb
+                .equal(root.get("quarto"), quarto);
     }
+}
 
 

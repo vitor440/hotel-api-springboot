@@ -23,8 +23,8 @@ public class QuartoValidator {
     }
 
     private boolean quartoDuplicado(Quarto entidade) {
-        Specification<Quarto> specs = QuartoSpecs.equalTipoQuarto(entidade.getTipoQuarto());
-        specs = specs.and(QuartoSpecs.equalHotel(entidade.getHotel()));
+        Specification<Quarto> specs = QuartoSpecs.equalTipoQuarto(entidade.getTipoQuarto())
+                .and(QuartoSpecs.equalHotel(entidade.getHotel()));
 
         List<Quarto> resultado = repository.findAll(specs);
 
@@ -32,6 +32,8 @@ public class QuartoValidator {
             return !resultado.isEmpty();
         }
 
-        return resultado.stream().map(r -> r.getId()).anyMatch(id -> !id.equals(entidade.getId()));
+        return resultado.stream()
+                .map(r -> r.getId())
+                .anyMatch(id -> !id.equals(entidade.getId()));
     }
 }

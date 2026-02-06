@@ -6,6 +6,7 @@ import com.hotelapi.hotelapi.mapper.ReservaMapper;
 import com.hotelapi.hotelapi.model.Reserva;
 import com.hotelapi.hotelapi.service.ReservaService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -44,19 +45,20 @@ public class ReservaController {
     }
 
     @GetMapping
-    public ResponseEntity<List<RespostaReservaDTO>> pesquisaFiltrada(
+    public ResponseEntity<Page<RespostaReservaDTO>> pesquisaFiltrada(
             @RequestParam(value = "nome-hospede", required = false) String nomeHospede,
             @RequestParam(value = "email", required = false) String email,
             @RequestParam(value = "telefone", required = false) String telefone,
-            @RequestParam(value = "codigo-confirmacao", required = false) String codigoConfirmacao,
             @RequestParam(value = "tipo-quarto", required = false) String tipoQuarto,
             @RequestParam(value = "check-in", required = false) LocalDate checkIn,
-            @RequestParam(value = "check-out", required = false) LocalDate checkOut
+            @RequestParam(value = "check-out", required = false) LocalDate checkOut,
+            @RequestParam(value = "num-pagina", defaultValue = "0") Integer numPagina,
+            @RequestParam(value = "tamanho-pagina", defaultValue = "3") Integer tamanhoPagina
     ) {
-        List<Reserva> resultado = service
-                .pesquisaFiltrada(nomeHospede, email, telefone, codigoConfirmacao, tipoQuarto, checkIn, checkOut);
+        Page<Reserva> resultado = service
+                .pesquisaFiltrada(nomeHospede, email, telefone, tipoQuarto, checkIn, checkOut, numPagina, tamanhoPagina);
 
-        List<RespostaReservaDTO> resultadoDTO = mapper.toDTOList(resultado);
+        Page<RespostaReservaDTO> resultadoDTO = resultado.map(mapper::toDTO);
         return ResponseEntity.ok(resultadoDTO);
     }
 

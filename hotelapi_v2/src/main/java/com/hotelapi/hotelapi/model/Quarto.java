@@ -26,14 +26,14 @@ public class Quarto {
     @Column(name = "tipo")
     private String tipoQuarto;
 
-    @Column(name = "preco")
-    private BigDecimal preco;
+    @Column(name = "preco_diaria")
+    private BigDecimal precoDiaria;
 
-    @Column(name = "capacidade")
-    private Integer capacidade;
+    @Column(name = "capacidade_maxima")
+    private Integer capacidadeMaxima;
 
-    @Column(name = "disponivel")
-    private Integer disponivel;
+    @Column(name = "vagas_disponiveis")
+    private Integer vagasDisponiveis;
 
     @Column(name = "tamanho_m²")
     private String tamanho;

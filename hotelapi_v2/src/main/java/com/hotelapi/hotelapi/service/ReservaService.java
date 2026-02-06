@@ -6,6 +6,8 @@ import com.hotelapi.hotelapi.repository.ReservaRepository;
 import com.hotelapi.hotelapi.repository.specs.ReservaSpecs;
 import com.hotelapi.hotelapi.validation.ReservaValidator;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
@@ -29,8 +31,9 @@ public class ReservaService {
                 .orElseThrow(() -> new RegistroNaoEncontradoException("Não existe um registro para esse id!"));
     }
 
-    public List<Reserva> pesquisaFiltrada(String nomeHospede, String email, String telefone,
-                                          String codigoConfimacao, String tipoQuarto, LocalDate d1, LocalDate d2) {
+    public Page<Reserva> pesquisaFiltrada(String nomeHospede, String email, String telefone,
+                                          String tipoQuarto, LocalDate d1, LocalDate d2,
+                                          Integer numPagina, Integer tamanhoPagina) {
 
         Specification<Reserva> specs = (root, query, cb) -> cb.conjunction();
 
@@ -46,10 +49,6 @@ public class ReservaService {
             specs = specs.and(ReservaSpecs.likeTelefone(telefone));
         }
 
-        if (codigoConfimacao != null) {
-            specs = specs.and(ReservaSpecs.likeCodigoConfirmacao(codigoConfimacao));
-        }
-
         if (tipoQuarto != null) {
             specs = specs.and(ReservaSpecs.likeTipoQuarto(tipoQuarto));
         }
@@ -58,7 +57,8 @@ public class ReservaService {
             specs = specs.and(ReservaSpecs.datasConflitantes(d1, d2));
         }
 
-        return repository.findAll(specs);
+        PageRequest pageRequest = PageRequest.of(numPagina, tamanhoPagina);
+        return repository.findAll(specs, pageRequest);
     }
 
     public void atualizar(Long id, Reserva aux) {
@@ -68,9 +68,9 @@ public class ReservaService {
         entidade.setNomeHospede(aux.getNomeHospede());
         entidade.setEmail(aux.getEmail());
         entidade.setTelefone(aux.getTelefone());
-        entidade.setNumAdultos(aux.getNumAdultos());
-        entidade.setNumCriancas(aux.getNumCriancas());
-        entidade.setTotal(aux.getTotal());
+        entidade.setQuantidadeAdultos(aux.getQuantidadeAdultos());
+        entidade.setQuantidadeCriancas(aux.getQuantidadeCriancas());
+        entidade.setTotalHospedes(aux.getTotalHospedes());
         entidade.setCodigoConfirmacao(aux.getCodigoConfirmacao());
         entidade.setQuarto(aux.getQuarto());
 

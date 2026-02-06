@@ -8,9 +8,9 @@ public record CadastroReservaDTO(Long id,
                                  String nomeHospede,
                                  String email,
                                  String telefone,
-                                 Integer numAdultos,
-                                 Integer numCriancas,
-                                 Integer total,
+                                 Integer quantidadeAdultos,
+                                 Integer quantidadeCriancas,
+                                 Integer totalHospedes,
                                  String codigoConfirmacao,
                                  Long idQuarto) {
 }
