@@ -26,6 +26,7 @@ public class QuartoController {
     @PostMapping
     public ResponseEntity<Object> salvar(@RequestBody @Valid CadastroQuartoDTO dto) {
         Quarto entidade = mapper.toEntity(dto);
+
         service.salvar(entidade);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")

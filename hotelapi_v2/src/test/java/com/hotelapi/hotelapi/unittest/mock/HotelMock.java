@@ -48,23 +48,4 @@ public class HotelMock {
         }
         return lista;
     }
-
-    @Test
-    void teste() {
-        Hotel hotel = mockEntidade(5);
-        HotelDTO dto = mockDTO(7);
-
-        System.out.println("entidade: " + hotel);
-        System.out.println("dto: " + dto);
-
-    }
-
-    @Test
-    void testeLista() {
-//        List<Hotel> lista = mockListaEntidade(12);
-//        lista.forEach(System.out::println);
-
-        List<HotelDTO> listaDTO = mockListaDTO(12);
-        listaDTO.forEach(System.out::println);
-    }
 }

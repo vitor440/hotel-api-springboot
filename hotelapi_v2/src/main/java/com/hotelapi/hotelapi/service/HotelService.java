@@ -28,7 +28,7 @@ public class HotelService {
 
     public Hotel consultaPorId(Long id) {
         return repository.findById(id)
-                .orElseThrow(() -> new RegistroNaoEncontradoException("Não existe um registro para esse id!"));
+                .orElseThrow(() -> new RegistroNaoEncontradoException("Não existe um registro com esse id!"));
     }
 
     public Page<Hotel> pesquisaFiltrada(String nome, String estado, Integer numPagina, Integer tamanhoPagina) {
@@ -48,7 +48,8 @@ public class HotelService {
 
     public void atualizar(Long id, HotelDTO dto) {
         Hotel entidade = repository.findById(id)
-                .orElseThrow(() -> new RegistroNaoEncontradoException("Não existe um registro para esse id!"));
+                .orElseThrow(() -> new RegistroNaoEncontradoException("Não existe um registro com esse id!"));
+
         entidade.setNome(dto.nome());
         entidade.setEstado(dto.estado());
         entidade.setCidade(dto.cidade());
@@ -61,7 +62,7 @@ public class HotelService {
 
     public void deletar(Long id) {
         Hotel entidade = repository.findById(id)
-                .orElseThrow(() -> new RegistroNaoEncontradoException("Não existe um registro para esse id!"));
+                .orElseThrow(() -> new RegistroNaoEncontradoException("Não existe um registro com esse id!"));
         repository.delete(entidade);
     }
 }

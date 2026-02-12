@@ -33,7 +33,9 @@ public class ReservaValidator {
             return !lista.isEmpty();
         }
 
-        return lista.stream().map(Reserva::getId).anyMatch(id -> !id.equals(reserva.getId()));
+        return lista.stream()
+                .map(Reserva::getId)
+                .anyMatch(id -> !id.equals(reserva.getId()));
     }
 }
 

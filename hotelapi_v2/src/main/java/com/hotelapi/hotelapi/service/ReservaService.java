@@ -28,7 +28,7 @@ public class ReservaService {
 
     public Reserva consultaPorId(Long id) {
         return repository.findById(id)
-                .orElseThrow(() -> new RegistroNaoEncontradoException("Não existe um registro para esse id!"));
+                .orElseThrow(() -> new RegistroNaoEncontradoException("Não existe um registro com esse id!"));
     }
 
     public Page<Reserva> pesquisaFiltrada(String nomeHospede, String email, String telefone,
@@ -63,7 +63,7 @@ public class ReservaService {
 
     public void atualizar(Long id, Reserva aux) {
         Reserva entidade = repository.findById(id)
-                .orElseThrow(() -> new RegistroNaoEncontradoException("Não existe um registro para esse id!"));
+                .orElseThrow(() -> new RegistroNaoEncontradoException("Não existe um registro com esse id!"));
 
         entidade.setNomeHospede(aux.getNomeHospede());
         entidade.setEmail(aux.getEmail());
@@ -80,7 +80,7 @@ public class ReservaService {
 
     public void deletar(Long id) {
         Reserva entidade = repository.findById(id)
-                .orElseThrow(() -> new RegistroNaoEncontradoException("Não existe um registro para esse id!"));
+                .orElseThrow(() -> new RegistroNaoEncontradoException("Não existe um registro com esse id!"));
 
         repository.delete(entidade);
     }

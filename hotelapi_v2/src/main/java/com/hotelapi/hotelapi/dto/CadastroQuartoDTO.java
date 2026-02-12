@@ -7,7 +7,7 @@ import jakarta.validation.constraints.Size;
 
 import java.math.BigDecimal;
 
-public record CadastroQuartoDTO(Long id,
+public record CadastroQuartoDTO(
                                 @NotBlank(message = "Campo Obrigatório!")
                                 String tipoQuarto,
                                 @NotNull(message = "Campo Obrigatório!")

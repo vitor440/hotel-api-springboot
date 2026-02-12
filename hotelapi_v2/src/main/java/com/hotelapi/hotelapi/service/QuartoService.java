@@ -29,7 +29,7 @@ public class QuartoService {
 
     public Quarto consultaPorId(Long id) {
         return repository.findById(id)
-                .orElseThrow(() -> new RegistroNaoEncontradoException("Não existe um registro para esse id!"));
+                .orElseThrow(() -> new RegistroNaoEncontradoException("Não existe um registro com esse id!"));
     }
 
     public Page<Quarto> pesquisaFiltrada(String tipoQuarto, BigDecimal preco1, BigDecimal preco2, String nomeHotel, Integer numPagina, Integer tamanhoPagina) {
@@ -53,7 +53,7 @@ public class QuartoService {
 
     public void atualizar(Long id, Quarto aux) {
         Quarto entidade = repository.findById(id)
-                .orElseThrow(() -> new RegistroNaoEncontradoException("Não existe um registro para esse id!"));
+                .orElseThrow(() -> new RegistroNaoEncontradoException("Não existe um registro com esse id!"));
 
         entidade.setTipoQuarto(aux.getTipoQuarto());
         entidade.setPrecoDiaria(aux.getPrecoDiaria());
@@ -68,7 +68,7 @@ public class QuartoService {
 
     public void deletar(Long id) {
         Quarto entidade = repository.findById(id)
-                .orElseThrow(() -> new RegistroNaoEncontradoException("Não existe um registro para esse id!"));
+                .orElseThrow(() -> new RegistroNaoEncontradoException("Não existe um registro com esse id!"));
         repository.delete(entidade);
     }
 }

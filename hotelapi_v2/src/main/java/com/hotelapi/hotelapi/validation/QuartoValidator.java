@@ -33,7 +33,7 @@ public class QuartoValidator {
         }
 
         return resultado.stream()
-                .map(r -> r.getId())
+                .map(Quarto::getId)
                 .anyMatch(id -> !id.equals(entidade.getId()));
     }
 }

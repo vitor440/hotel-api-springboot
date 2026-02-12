@@ -1,4 +1,4 @@
-package com.hotelapi.hotelapi.unittest;
+package com.hotelapi.hotelapi.unittest.mapper;
 
 import com.hotelapi.hotelapi.dto.HotelDTO;
 import com.hotelapi.hotelapi.mapper.HotelMapper;
