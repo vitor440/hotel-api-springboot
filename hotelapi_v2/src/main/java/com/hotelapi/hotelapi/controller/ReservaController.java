@@ -3,11 +3,13 @@ package com.hotelapi.hotelapi.controller;
 import com.hotelapi.hotelapi.dto.CadastroReservaDTO;
 import com.hotelapi.hotelapi.dto.RespostaReservaDTO;
 import com.hotelapi.hotelapi.mapper.ReservaMapper;
+import com.hotelapi.hotelapi.model.Quarto;
 import com.hotelapi.hotelapi.model.Reserva;
 import com.hotelapi.hotelapi.service.ReservaService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -24,6 +26,7 @@ public class ReservaController {
     private final ReservaMapper mapper;
 
     @PostMapping
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public ResponseEntity<Object> salvar(@RequestBody CadastroReservaDTO dto) {
         Reserva entidade = mapper.toEntity(dto);
         service.salvar(entidade);
@@ -37,6 +40,7 @@ public class ReservaController {
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public ResponseEntity<RespostaReservaDTO> consultaPorId(@PathVariable("id") Long id) {
         Reserva entidade = service.consultaPorId(id);
         RespostaReservaDTO dto = mapper.toDTO(entidade);
@@ -45,6 +49,7 @@ public class ReservaController {
     }
 
     @GetMapping
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public ResponseEntity<Page<RespostaReservaDTO>> pesquisaFiltrada(
             @RequestParam(value = "nome-hospede", required = false) String nomeHospede,
             @RequestParam(value = "email", required = false) String email,
@@ -63,6 +68,7 @@ public class ReservaController {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public ResponseEntity<Void> atualizar(@PathVariable("id") Long id, @RequestBody CadastroReservaDTO dto) {
         Reserva entidade = mapper.toEntity(dto);
         service.atualizar(id, entidade);
@@ -71,6 +77,7 @@ public class ReservaController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public ResponseEntity<Void> deletar(@PathVariable("id") Long id) {
         service.deletar(id);
 

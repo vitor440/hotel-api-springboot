@@ -1,9 +1,9 @@
 package com.hotelapi.hotelapi.service;
 
-import com.hotelapi.hotelapi.dto.CadastroQuartoDTO;
 import com.hotelapi.hotelapi.exception.RegistroNaoEncontradoException;
 import com.hotelapi.hotelapi.model.Quarto;
 import com.hotelapi.hotelapi.repository.QuartoRepository;
+import com.hotelapi.hotelapi.repository.ReservaRepository;
 import com.hotelapi.hotelapi.repository.specs.QuartoSpecs;
 import com.hotelapi.hotelapi.validation.QuartoValidator;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +13,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -70,5 +71,13 @@ public class QuartoService {
         Quarto entidade = repository.findById(id)
                 .orElseThrow(() -> new RegistroNaoEncontradoException("Não existe um registro com esse id!"));
         repository.delete(entidade);
+    }
+
+    public List<Quarto> obterQuartosDisponiveis(String tipoQuarto, LocalDate checkIn, LocalDate checkOut) {
+//        List<Quarto> quartos = repository.obterQuartosDisponiveis(tipoQuarto, checkIn, checkOut);
+        Specification<Quarto> spec = QuartoSpecs.quartosDisponiveis(tipoQuarto, checkIn, checkOut);
+        List<Quarto> quartos = repository.findAll(spec);
+
+        return quartos;
     }
 }

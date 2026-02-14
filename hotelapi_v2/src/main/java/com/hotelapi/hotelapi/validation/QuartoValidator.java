@@ -18,7 +18,7 @@ public class QuartoValidator {
 
     public void validar(Quarto entidade) {
         if (quartoDuplicado(entidade)) {
-            throw new RegistroDuplicadoException("Não é permitido o cadastro de quarto em um hotel que já tenha o mesmo tipo de quarto!");
+            throw new RegistroDuplicadoException("Já existe um quarto deste tipo cadastrado para este hotel!");
         }
     }
 

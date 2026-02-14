@@ -36,13 +36,13 @@ public class Reserva {
     private String telefone;
 
     @Column(name = "quantidade_adultos")
-    private Integer quantidadeAdultos;
+    private int quantidadeAdultos;
 
     @Column(name = "quantidade_criancas")
-    private Integer quantidadeCriancas;
+    private int quantidadeCriancas;
 
     @Column(name = "total_hospedes")
-    private Integer totalHospedes;
+    private int totalHospedes;
 
     @Column(name = "cod_confirmacao")
     private String codigoConfirmacao;
@@ -58,4 +58,18 @@ public class Reserva {
     @LastModifiedDate
     @Column(name = "data_atualizacao")
     private LocalDateTime dataAtualizacao;
+
+    public void calcularTotalDeHospedes() {
+        this.totalHospedes = this.quantidadeAdultos + this.quantidadeCriancas;
+    }
+
+    public void setQuantidadeAdultos(Integer quantidadeAdultos) {
+        this.quantidadeAdultos = quantidadeAdultos;
+        calcularTotalDeHospedes();
+    }
+
+    public void setQuantidadeCriancas(Integer quantidadeCriancas) {
+        this.quantidadeCriancas = quantidadeCriancas;
+        calcularTotalDeHospedes();
+    }
 }

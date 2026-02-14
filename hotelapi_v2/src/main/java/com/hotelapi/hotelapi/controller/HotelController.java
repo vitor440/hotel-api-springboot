@@ -8,6 +8,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -23,6 +24,7 @@ public class HotelController {
     private final HotelMapper mapper;
 
     @PostMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Object> salvar(@RequestBody @Valid HotelDTO dto) {
         Hotel entidade = mapper.toEntity(dto);
 
@@ -36,6 +38,7 @@ public class HotelController {
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public ResponseEntity<HotelDTO> consultaPorId(@PathVariable("id") Long id) {
         Hotel entidade = service.consultaPorId(id);
         HotelDTO dto = mapper.toDTO(entidade);
@@ -43,6 +46,7 @@ public class HotelController {
     }
 
     @GetMapping
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public ResponseEntity<Page<HotelDTO>> pesquisaFiltrada(
             @RequestParam(value = "nome", required = false) String nome,
             @RequestParam(value = "estado", required = false) String estado,
@@ -55,12 +59,14 @@ public class HotelController {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> atualizar(@PathVariable("id") Long id, @RequestBody @Valid HotelDTO dto) {
         service.atualizar(id, dto);
         return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> deletar(@PathVariable("id") Long id) {
         service.deletar(id);
         return ResponseEntity.noContent().build();

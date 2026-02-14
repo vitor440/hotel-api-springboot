@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -23,6 +24,10 @@ public class ReservaService {
 
     public void salvar(Reserva reserva) {
         validator.validar(reserva);
+
+        reserva.setCodigoConfirmacao(UUID.randomUUID().toString());
+        int vagasDisponiveis = reserva.getQuarto().getVagasDisponiveis();
+        reserva.getQuarto().setVagasDisponiveis(vagasDisponiveis - 1);
         repository.save(reserva);
     }
 
@@ -75,6 +80,10 @@ public class ReservaService {
         entidade.setQuarto(aux.getQuarto());
 
         validator.validar(entidade);
+
+        entidade.setCodigoConfirmacao(UUID.randomUUID().toString());
+        int vagasDisponiveis = entidade.getQuarto().getVagasDisponiveis();
+        entidade.getQuarto().setVagasDisponiveis(vagasDisponiveis - 1);
         repository.save(entidade);
     }
 

@@ -16,7 +16,7 @@ public class HotelValidator {
 
     public void validar(Hotel entidade) {
         if(existeRegistroDuplicado(entidade)) {
-            throw new RegistroDuplicadoException("Não é permitido o cadastro de hotel com nome e estado já existente!");
+            throw new RegistroDuplicadoException("Já existe um hotel cadastrado com o mesmo nome neste estado.!");
         }
     }
 

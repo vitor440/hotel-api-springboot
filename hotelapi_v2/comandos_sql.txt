@@ -37,3 +37,11 @@ create table reserva(
 	data_cadastro timestamp,
     data_atualizacao timestamp
 )
+
+create table usuario(
+ id bigint generated always as identity primary key,
+ login varchar(80) not null,
+ email varchar(150) not null,
+ senha varchar(300) not null,
+ roles varchar[]
+)

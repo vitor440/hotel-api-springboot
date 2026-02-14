@@ -23,9 +23,5 @@ public record CadastroReservaDTO(@NotNull(message = "campo obrigatório!")
                                  @NotNull(message = "campo obrigatório!")
                                  Integer quantidadeCriancas,
                                  @NotNull(message = "campo obrigatório!")
-                                 Integer totalHospedes,
-                                 @NotBlank(message = "campo obrigatório!")
-                                 String codigoConfirmacao,
-                                 @NotNull(message = "campo obrigatório!")
                                  Long idQuarto) {
 }
