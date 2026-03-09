@@ -3,9 +3,9 @@ spring:
     name: hotelapi
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/hoteldbv2
-    username: postgres
-    password: postgres
+    url: ${POSTGRES_URL}
+    username: ${POSTGRES_USER}
+    password: ${POSTGRES_PASSWORD}
   jpa:
     show_sql: true
     properties:
@@ -19,6 +19,3 @@ spring:
       max-request-size: 215MB
 springdoc:
   override-with-generic-response: false
-file:
-  directory: /home/vitor/arquivosx/
-
