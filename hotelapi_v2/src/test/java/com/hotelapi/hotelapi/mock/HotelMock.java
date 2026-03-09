@@ -1,4 +1,4 @@
-package com.hotelapi.hotelapi.unittest.mock;
+package com.hotelapi.hotelapi.mock;
 
 import com.hotelapi.hotelapi.dto.HotelDTO;
 import com.hotelapi.hotelapi.model.Hotel;

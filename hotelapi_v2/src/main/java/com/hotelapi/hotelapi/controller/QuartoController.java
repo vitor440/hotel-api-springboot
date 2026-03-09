@@ -5,6 +5,9 @@ import com.hotelapi.hotelapi.dto.RespostaQuartoDTO;
 import com.hotelapi.hotelapi.mapper.QuartoMapper;
 import com.hotelapi.hotelapi.model.Quarto;
 import com.hotelapi.hotelapi.service.QuartoService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -28,6 +31,12 @@ public class QuartoController {
 
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
+    @Operation(summary = "Salvar", description = "Cadastrar novo quarto.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "201", description = "Salvo com sucesso."),
+            @ApiResponse(responseCode = "409", description = "Quarto duplicado."),
+            @ApiResponse(responseCode = "422", description = "Erro de validação.")
+    })
     public ResponseEntity<Object> salvar(@RequestBody @Valid CadastroQuartoDTO dto) {
         Quarto entidade = mapper.toEntity(dto);
 
@@ -42,6 +51,11 @@ public class QuartoController {
 
     @GetMapping("/{id}")
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
+    @Operation(summary = "Consulta pelo id", description = "Obtém um quarto pelo id.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Sucesso."),
+            @ApiResponse(responseCode = "404", description = "Não existe quarto com esse id.")
+    })
     public ResponseEntity<RespostaQuartoDTO> consultaPorId(@PathVariable("id") Long id) {
         Quarto entidade = service.consultaPorId(id);
         RespostaQuartoDTO dto = mapper.toDTO(entidade);
@@ -51,6 +65,8 @@ public class QuartoController {
 
     @GetMapping
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
+    @Operation(summary = "Pesquisa", description = "Pesquisa quartos por parâmetros.")
+    @ApiResponse(responseCode = "200", description = "Sucesso.")
     public ResponseEntity<Page<RespostaQuartoDTO>> pesquisaFiltrada(
             @RequestParam(value = "tipo-quarto", required = false) String tipoQuarto,
             @RequestParam(value = "p1", required = false) BigDecimal p1,
@@ -67,6 +83,13 @@ public class QuartoController {
 
     @PutMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
+    @Operation(summary = "Atualizar", description = "Atualizar quarto.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "204", description = "Atualizado com sucesso."),
+            @ApiResponse(responseCode = "404", description = "Não existe quarto com esse id."),
+            @ApiResponse(responseCode = "409", description = "Quarto duplicado."),
+            @ApiResponse(responseCode = "422", description = "Erro de validação.")
+    })
     public ResponseEntity<Void> atualizar(@PathVariable("id") Long id, @RequestBody @Valid CadastroQuartoDTO dto) {
         Quarto entidade = mapper.toEntity(dto);
         service.atualizar(id, entidade);
@@ -75,12 +98,20 @@ public class QuartoController {
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
+    @Operation(summary = "Deletar", description = "Deletar quarto pelo id.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "204", description = "Deletado com sucesso."),
+            @ApiResponse(responseCode = "404", description = "Não existe quarto com esse id.")
+    })
     public ResponseEntity<Void> deletar(@PathVariable("id") Long id) {
         service.deletar(id);
         return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/disponiveis")
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
+    @Operation(summary = "Obter quartos disponíveis", description = "Obtém quartos disponíveis no intervalo de datas especificado.")
+    @ApiResponse(responseCode = "200", description = "Sucesso.")
     public ResponseEntity<List<RespostaQuartoDTO>> obterQuartosDisponiveis(
             @RequestParam(value = "tipo-quarto") String tipoQuarto,
             @RequestParam(value = "check-in") LocalDate checkIn,

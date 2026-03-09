@@ -3,7 +3,7 @@ package com.hotelapi.hotelapi.unittest.mapper;
 import com.hotelapi.hotelapi.dto.HotelDTO;
 import com.hotelapi.hotelapi.mapper.HotelMapper;
 import com.hotelapi.hotelapi.model.Hotel;
-import com.hotelapi.hotelapi.unittest.mock.HotelMock;
+import com.hotelapi.hotelapi.mock.HotelMock;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;

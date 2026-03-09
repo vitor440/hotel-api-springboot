@@ -6,7 +6,7 @@ import com.hotelapi.hotelapi.exception.RegistroNaoEncontradoException;
 import com.hotelapi.hotelapi.model.Hotel;
 import com.hotelapi.hotelapi.repository.HotelRepository;
 import com.hotelapi.hotelapi.service.HotelService;
-import com.hotelapi.hotelapi.unittest.mock.HotelMock;
+import com.hotelapi.hotelapi.mock.HotelMock;
 import com.hotelapi.hotelapi.validation.HotelValidator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

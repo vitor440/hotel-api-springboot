@@ -42,7 +42,6 @@ public class QuartoSpecs {
             Root<Reserva> reservas = subquery.from(Reserva.class);
 
             // equivalente = select r.id_quarto from reserva r where (r.checkOut >= :checkIn) and (r.checkIn <= :checkOut)
-            // subquery que retorna todos os id_quarto da tabela "reservas" se as datas conflitarem com os check-in e check-out especificados.
             Subquery<Long> buscaPorDatasConflitantes = subquery.select(reservas.get("quarto").get("id"))
                     .where(cb.and(cb.lessThanOrEqualTo(reservas.get("checkIn"), checkOut),
                             cb.greaterThanOrEqualTo(reservas.get("checkOut"), checkIn)

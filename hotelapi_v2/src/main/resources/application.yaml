@@ -11,3 +11,14 @@ spring:
     properties:
       hibernate:
         format_sql: true
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 200MB
+      file-size-threshold: 2KB
+      max-request-size: 215MB
+springdoc:
+  override-with-generic-response: false
+file:
+  directory: /home/vitor/arquivosx/
+

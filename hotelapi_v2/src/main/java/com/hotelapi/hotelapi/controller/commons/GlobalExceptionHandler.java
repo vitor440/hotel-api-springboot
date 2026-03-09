@@ -2,9 +2,7 @@ package com.hotelapi.hotelapi.controller.commons;
 
 import com.hotelapi.hotelapi.dto.ErroCampo;
 import com.hotelapi.hotelapi.dto.ErroResposta;
-import com.hotelapi.hotelapi.exception.DatasConflitantesException;
-import com.hotelapi.hotelapi.exception.RegistroDuplicadoException;
-import com.hotelapi.hotelapi.exception.RegistroNaoEncontradoException;
+import com.hotelapi.hotelapi.exception.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -52,4 +50,18 @@ public class GlobalExceptionHandler {
     public ErroResposta handleRuntimeException(RuntimeException e) {
         return new ErroResposta(HttpStatus.BAD_REQUEST.value(), e.getMessage(), List.of());
     }
+
+    @ExceptionHandler(FileNotFoundException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ErroResposta handleFileNotFoundException(FileNotFoundException e) {
+        return new ErroResposta(HttpStatus.INTERNAL_SERVER_ERROR.value(), e.getMessage(), List.of());
+    }
+
+    @ExceptionHandler(FileStorageException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ErroResposta handleFileStorageException(FileStorageException e) {
+        return new ErroResposta(HttpStatus.INTERNAL_SERVER_ERROR.value(), e.getMessage(), List.of());
+    }
+
+
 }

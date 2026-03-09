@@ -4,6 +4,9 @@ import com.hotelapi.hotelapi.dto.HotelDTO;
 import com.hotelapi.hotelapi.mapper.HotelMapper;
 import com.hotelapi.hotelapi.model.Hotel;
 import com.hotelapi.hotelapi.service.HotelService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -25,7 +28,14 @@ public class HotelController {
 
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<Object> salvar(@RequestBody @Valid HotelDTO dto) {
+    @Operation(summary = "Salvar", description = "Cadastrar novo hotel.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "201", description = "Salvo com sucesso."),
+            @ApiResponse(responseCode = "409", description = "Não é permitido cadastrar 2 hoteis com mesmo nome e estado."),
+            @ApiResponse(responseCode = "422", description = "Erro de validação.")
+            }
+    )
+    public ResponseEntity<Void> salvar(@RequestBody @Valid HotelDTO dto) {
         Hotel entidade = mapper.toEntity(dto);
 
         service.salvar(entidade);
@@ -39,6 +49,11 @@ public class HotelController {
 
     @GetMapping("/{id}")
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
+    @Operation(summary = "Consulta pelo id", description = "Obtém um hotel pelo id.")
+    @ApiResponses({
+        @ApiResponse(responseCode = "200", description = "Sucesso."),
+        @ApiResponse(responseCode = "404", description = "Não existe hotel com esse id.")
+    })
     public ResponseEntity<HotelDTO> consultaPorId(@PathVariable("id") Long id) {
         Hotel entidade = service.consultaPorId(id);
         HotelDTO dto = mapper.toDTO(entidade);
@@ -47,6 +62,8 @@ public class HotelController {
 
     @GetMapping
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
+    @Operation(summary = "Pesquisa", description = "Pesquisa hoteis por parâmetros.")
+    @ApiResponse(responseCode = "200", description = "Sucesso.")
     public ResponseEntity<Page<HotelDTO>> pesquisaFiltrada(
             @RequestParam(value = "nome", required = false) String nome,
             @RequestParam(value = "estado", required = false) String estado,
@@ -60,6 +77,13 @@ public class HotelController {
 
     @PutMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
+    @Operation(summary = "Atualizar", description = "Atualizar hotel.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "204", description = "Atualizado com sucesso."),
+            @ApiResponse(responseCode = "404", description = "Não existe hotel com esse id."),
+            @ApiResponse(responseCode = "409", description = "Não é permitido cadastrar 2 hoteis com mesmo nome e estado."),
+            @ApiResponse(responseCode = "422", description = "Erro de validação.")
+    })
     public ResponseEntity<Void> atualizar(@PathVariable("id") Long id, @RequestBody @Valid HotelDTO dto) {
         service.atualizar(id, dto);
         return ResponseEntity.noContent().build();
@@ -67,6 +91,12 @@ public class HotelController {
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
+    @Operation(summary = "Deletar", description = "Deletar hotel pelo id.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "204", description = "Deletado com sucesso."),
+            @ApiResponse(responseCode = "404", description = "Não existe hotel com esse id."),
+    }
+    )
     public ResponseEntity<Void> deletar(@PathVariable("id") Long id) {
         service.deletar(id);
         return ResponseEntity.noContent().build();

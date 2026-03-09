@@ -6,6 +6,9 @@ import com.hotelapi.hotelapi.mapper.ReservaMapper;
 import com.hotelapi.hotelapi.model.Quarto;
 import com.hotelapi.hotelapi.model.Reserva;
 import com.hotelapi.hotelapi.service.ReservaService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -27,6 +30,14 @@ public class ReservaController {
 
     @PostMapping
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
+    @Operation(summary = "Salvar", description = "Cadastrar nova reserva.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "201", description = "Salvo com sucesso."),
+            @ApiResponse(responseCode = "409", description = "Datas conflitantes."),
+            @ApiResponse(responseCode = "400", description = "Capacidade máxima excedida."),
+            @ApiResponse(responseCode = "400", description = "Não há vagas disponíveis para esse quarto."),
+            @ApiResponse(responseCode = "422", description = "Erro de validação.")
+    })
     public ResponseEntity<Object> salvar(@RequestBody CadastroReservaDTO dto) {
         Reserva entidade = mapper.toEntity(dto);
         service.salvar(entidade);

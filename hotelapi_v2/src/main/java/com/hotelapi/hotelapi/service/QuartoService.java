@@ -74,10 +74,9 @@ public class QuartoService {
     }
 
     public List<Quarto> obterQuartosDisponiveis(String tipoQuarto, LocalDate checkIn, LocalDate checkOut) {
-//        List<Quarto> quartos = repository.obterQuartosDisponiveis(tipoQuarto, checkIn, checkOut);
-        Specification<Quarto> spec = QuartoSpecs.quartosDisponiveis(tipoQuarto, checkIn, checkOut);
-        List<Quarto> quartos = repository.findAll(spec);
-
+        List<Quarto> quartos = repository.obterQuartosDisponiveis(tipoQuarto, checkIn, checkOut);
+        //Specification<Quarto> spec = QuartoSpecs.quartosDisponiveis(tipoQuarto, checkIn, checkOut);
+        //List<Quarto> quartos = repository.findAll(spec);
         return quartos;
     }
 }
