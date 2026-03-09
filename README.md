@@ -55,12 +55,15 @@ CREATE DATABASE hotelapi;
 
 Edite o arquivo `hotelapi_v2/src/main/resources/application.properties`:
 
-```properties
-spring.datasource.url=jdbc:postgresql://localhost:5432/hotelapi
-spring.datasource.username=seu_usuario
-spring.datasource.password=sua_senha
-spring.jpa.hibernate.ddl-auto=update
-spring.jpa.database-platform=org.hibernate.dialect.PostgreSQLDialect
+```yaml
+spring:
+  datasource:
+    url:jdbc: postgresql://localhost:5432/hotelapi
+    username: seu_usuario
+    password: sua_senha
+    jpa:
+      hibernate:
+        ddl-auto: update
 ```
 
 ## 🏃 Como Executar
