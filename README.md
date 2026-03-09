@@ -58,7 +58,7 @@ Edite o arquivo `hotelapi_v2/src/main/resources/application.properties`:
 ```yaml
 spring:
   datasource:
-    url:jdbc: postgresql://localhost:5432/hotelapi
+    url: jdbc:postgresql://localhost:5432/hotelapi
     username: seu_usuario
     password: sua_senha
     jpa:
