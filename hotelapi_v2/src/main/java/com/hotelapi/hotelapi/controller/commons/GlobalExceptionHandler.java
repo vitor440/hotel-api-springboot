@@ -51,17 +51,5 @@ public class GlobalExceptionHandler {
         return new ErroResposta(HttpStatus.BAD_REQUEST.value(), e.getMessage(), List.of());
     }
 
-    @ExceptionHandler(FileNotFoundException.class)
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ErroResposta handleFileNotFoundException(FileNotFoundException e) {
-        return new ErroResposta(HttpStatus.INTERNAL_SERVER_ERROR.value(), e.getMessage(), List.of());
-    }
-
-    @ExceptionHandler(FileStorageException.class)
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ErroResposta handleFileStorageException(FileStorageException e) {
-        return new ErroResposta(HttpStatus.INTERNAL_SERVER_ERROR.value(), e.getMessage(), List.of());
-    }
-
 
 }
